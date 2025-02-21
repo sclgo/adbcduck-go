@@ -1,20 +1,20 @@
-package duckadbc // import "github.com/sclgo/github-adbc-go"
+package adbcduck // import "github.com/sclgo/duckdb-adbc-go"
 
 import (
 	"database/sql"
 	"database/sql/driver"
-	"os"
+	"fmt"
 
 	"github.com/apache/arrow-adbc/go/adbc/drivermgr"
 	"github.com/apache/arrow-adbc/go/adbc/sqldriver"
 )
 
+const DriverName = "adbcduck"
+
+var LibraryName = "duckdb"
+
 func init() {
-	driverName := os.Getenv("DUCKDB_DRIVER_NAME")
-	if driverName == "" {
-		driverName = "duckadbc"
-	}
-	sql.Register(driverName, makeDriver())
+	sql.Register(DriverName, makeDriver())
 }
 
 func makeDriver() driver.Driver {
@@ -25,16 +25,20 @@ func makeDriver() driver.Driver {
 	}
 }
 
-const namePrefix = "driver=duckdb;entrypoint=duckdb_adbc_init;path="
+const namePattern = "driver=%s;entrypoint=duckdb_adbc_init;path=%s"
 
 type duckdbDriver struct {
 	adbcDriver sqldriver.Driver
 }
 
 func (d duckdbDriver) OpenConnector(name string) (driver.Connector, error) {
-	return d.adbcDriver.OpenConnector(namePrefix + name)
+	return d.adbcDriver.OpenConnector(getDsn(name))
 }
 
 func (d duckdbDriver) Open(name string) (driver.Conn, error) {
-	return d.adbcDriver.Open(namePrefix + name)
+	return d.adbcDriver.Open(getDsn(name))
+}
+
+func getDsn(name string) string {
+	return fmt.Sprintf(namePattern, LibraryName, name)
 }

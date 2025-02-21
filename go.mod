@@ -1,13 +1,16 @@
 module github.com/sclgo/duckdb-adbc-go
 
-go 1.23
+go 1.23.6
 
 require (
 	github.com/apache/arrow-adbc/go/adbc v1.4.0
+	github.com/murfffi/getaduck v0.0.0-20250221145822-50f2ef0157cf
+	github.com/samber/lo v1.49.1
 	github.com/stretchr/testify v1.10.0
 )
 
 require (
+	github.com/ansel1/merry/v2 v2.2.1 // indirect
 	github.com/apache/arrow-go/v18 v18.1.1-0.20250116162745-f533d2066dee // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/goccy/go-json v0.10.4 // indirect
@@ -21,6 +24,7 @@ require (
 	golang.org/x/mod v0.22.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/tools v0.29.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	google.golang.org/protobuf v1.36.2 // indirect
