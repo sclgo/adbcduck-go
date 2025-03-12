@@ -4,6 +4,8 @@ github.com/ansel1/merry/v2 v2.2.1 h1:PJpynLFvIpJkn8ZGgNHLq332zIyBc/wTqp3o42ZpWdU
 github.com/ansel1/merry/v2 v2.2.1/go.mod h1:K9lCkM6tJ8s7LQVQ0ZmZ0WrB3BCyr+ZDzoqotzzoxpI=
 github.com/apache/arrow-adbc/go/adbc v1.4.0 h1:I21y3Pq9ygtsmbwNgDZ3dsWRgtuOVMWIVBTdpWeEOCQ=
 github.com/apache/arrow-adbc/go/adbc v1.4.0/go.mod h1:fBbhukk/BpKLGfYquN/ru3ru1Ipl4e+IVqsBtCfWMJc=
+github.com/apache/arrow-adbc/go/adbc v1.5.0 h1:7PM/UiBS8CaCQPi7IG4l8r0kdWn79nX7BHhO9640VQk=
+github.com/apache/arrow-adbc/go/adbc v1.5.0/go.mod h1:sWBqbocybjMizoE67IkTzbFP7B6sryE8gq6uUooBsDY=
 github.com/apache/arrow-go/v18 v18.1.1-0.20250116162745-f533d2066dee h1:LRDJtjipOzw1j1P1VedYDBIZvDVfz+lj1abQ998VGms=
 github.com/apache/arrow-go/v18 v18.1.1-0.20250116162745-f533d2066dee/go.mod h1:WbR+28APHo5LrJrHfwGPWRpWEtejDAUWRF3yoSLpSx4=
 github.com/apache/thrift v0.21.0 h1:tdPmh/ptjE1IJnhbhrcl2++TauVjy242rkV/UzJChnE=

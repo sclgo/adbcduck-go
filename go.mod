@@ -3,7 +3,7 @@ module github.com/sclgo/adbcduck-go
 go 1.23.6
 
 require (
-	github.com/apache/arrow-adbc/go/adbc v1.4.0
+	github.com/apache/arrow-adbc/go/adbc v1.5.0
 	github.com/murfffi/getaduck v0.1.0
 	github.com/stretchr/testify v1.10.0
 )
