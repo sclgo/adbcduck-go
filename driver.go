@@ -1,6 +1,7 @@
-package adbcduck // import "github.com/sclgo/adbcduck-go"
+package adbcduck // import "github.com/sclgo/duckdb-adbc-go"
 
 import (
+	"context"
 	"database/sql/driver"
 	"fmt"
 
@@ -26,12 +27,31 @@ type Driver struct {
 	libraryName string
 }
 
+type duckDbConnector struct {
+	driver.Connector
+}
+
+func (d duckDbConnector) Connect(ctx context.Context) (driver.Conn, error) {
+	adbcConn, err := d.Connector.Connect(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &conn{
+		fullConn: adbcConn.(fullConn),
+	}, nil
+}
+
 func (d *Driver) OpenConnector(name string) (driver.Connector, error) {
-	return d.adbcDriver.OpenConnector(d.getDsn(name))
+	adbcCtr, err := d.adbcDriver.OpenConnector(d.getDsn(name))
+	return duckDbConnector{adbcCtr}, err
 }
 
 func (d *Driver) Open(name string) (driver.Conn, error) {
-	return d.adbcDriver.Open(d.getDsn(name))
+	connector, err := d.OpenConnector(name)
+	if err != nil {
+		return nil, err
+	}
+	return connector.Connect(context.Background())
 }
 
 func (d *Driver) getDsn(name string) string {
