@@ -1,14 +1,14 @@
 # adbcduck-go - alternative DuckDB Go driver
 
-`duckdb-adbc-go` is a Go [database/sql](https://pkg.go.dev/database/sql) driver for [duckdb](https://duckdb.org/)
+`adbcduck-go` is a Go [database/sql](https://pkg.go.dev/database/sql) driver for [duckdb](https://duckdb.org/)
  [ADBC API](https://duckdb.org/docs/clients/adbc). It is an altenative to the [official Go driver](https://duckdb.org/docs/clients/go) 
 - `github.com/marcboeker/go-duckdb`.
-`duckdb-adbc-go` is a very thin wrapper over generic `database/sql` [adapter](https://pkg.go.dev/github.com/apache/arrow-adbc/go/adbc/sqldriver) 
+`adbcduck-go` is a very thin wrapper over generic `database/sql` [adapter](https://pkg.go.dev/github.com/apache/arrow-adbc/go/adbc/sqldriver) 
 for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Arrow project](https://arrow.apache.org/).
 
-`duckdb-adbc-go` is great for:
+`adbcduck-go` is great for:
 
-- **libraries that value their dependency footprint** - `go get github.com/sclgo/duckdb-adbc-go` downloads up to 310 MB in Go modules,
+- **libraries that value their dependency footprint** - `go get github.com/sclgo/adbcduck-go` downloads up to 310 MB in Go modules,
   while `go get github.com/marcboeker/go-duckdb` downloads up to 824 MB - 500 MB more. Even when using GOPROXY, this quickly adds up
   especially in CI builds. Remember, projects that import your Go library must download all your transitive dependencies, even
   you use them only in tests.
