@@ -1,7 +1,9 @@
+// Package quickstart downloads DuckDB library from Github and registers a new driver instance with it
 package quickstart
 
 import (
 	"database/sql"
+	"os"
 	"path/filepath"
 
 	"github.com/murfffi/getaduck/download"
@@ -9,7 +11,11 @@ import (
 )
 
 func init() {
-	libFile, err := download.Do(download.DefaultSpec())
+	spec := download.DefaultSpec()
+	if ver := os.Getenv("DUCKDB_VERSION"); ver != "" {
+		spec.Version = ver
+	}
+	libFile, err := download.Do(spec)
 	if err != nil {
 		panic(err)
 	}
