@@ -1,4 +1,4 @@
-package adbcduck // import "github.com/sclgo/duckdb-adbc-go"
+package adbcduck // import "github.com/sclgo/adbcduck-go"
 
 import (
 	"database/sql"

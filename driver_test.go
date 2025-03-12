@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/sclgo/duckdb-adbc-go"
+	"github.com/sclgo/adbcduck-go"
 )
 
 func TestE2E(t *testing.T) {

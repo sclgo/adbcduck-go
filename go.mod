@@ -1,4 +1,4 @@
-module github.com/sclgo/duckdb-adbc-go
+module github.com/sclgo/adbcduck-go
 
 go 1.23.6
 
