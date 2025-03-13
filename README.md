@@ -1,8 +1,7 @@
 # adbcduck-go - alternative DuckDB Go driver
 
 `adbcduck-go` is a Go [database/sql](https://pkg.go.dev/database/sql) driver for [DuckDB](https://duckdb.org/)
-[ADBC API](https://duckdb.org/docs/clients/adbc). It is an alternative to the [official Go driver](https://duckdb.org/docs/clients/go) 
-- `github.com/marcboeker/go-duckdb`.
+[ADBC API](https://duckdb.org/docs/clients/adbc). It is an alternative to the [official Go driver](https://duckdb.org/docs/clients/go) `github.com/marcboeker/go-duckdb`.
 `adbcduck-go` is a thin, but not trivial, wrapper over generic `database/sql` [adapter](https://pkg.go.dev/github.com/apache/arrow-adbc/go/adbc/sqldriver) 
 for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Arrow project](https://arrow.apache.org/).
 
