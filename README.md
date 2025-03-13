@@ -57,6 +57,19 @@ Review [the API documentation](https://pkg.go.dev/github.com/sclgo/adbcduck-go)
 and the minimal code of the [quickstart](/quickstart/quickstart.go) package to see how to configure the library name, 
 location, and, optionally, automatic download.
 
+## CLI
+
+`adbcduck-go` is compatible with [usql](https://github.com/xo/usql) - the universal SQL CLI - a fully featured, single-binary, CLI for over 50 databases.
+
+For example, let's use DuckDB to read Parquet files on S3 and copy the results into Microsoft SQL Server.
+
+First, install `usql` with `adbcduck` driver and start it using in-memory DuckDB:
+
+```shell
+go run github.com/sclgo/usqlgen@latest install -i github.com/sclgo/adbcduck-go/quickstart
+usql adbcduck:
+```
+
 ## Limitations
 
 This library requires CGO, because it depends on the [CGO wrapper](https://github.com/apache/arrow-adbc/blob/11a9128/go/adbc/drivermgr/wrapper.go)
