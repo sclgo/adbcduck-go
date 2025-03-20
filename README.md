@@ -57,6 +57,16 @@ Review [the API documentation](https://pkg.go.dev/github.com/sclgo/adbcduck-go)
 and the minimal code of the [quickstart](/quickstart/quickstart.go) package to see how to configure the library name, 
 location, and, optionally, automatic download.
 
+Registration with blank import is optional. Importing only `github.com/sclgo/adbcduck-go` gives access to
+the entire driver API without side effects. Only the `github.com/sclgo/adbcduck-go/register`
+and `github.com/sclgo/adbcduck-go/quickstart` packages have `init()` functions that call 
+[sql.Register](https://pkg.go.dev/database/sql#Register) .
+
+## CLI
+
+`adbcduck-go` is compatible with [usql](https://github.com/xo/usql) - the universal SQL CLI - a fully featured, single-binary, 
+CLI for over 50 databases. Check out [this example](./docs/cli_example.md).
+
 ## Limitations
 
 This library requires CGO, because it depends on the [CGO wrapper](https://github.com/apache/arrow-adbc/blob/11a9128/go/adbc/drivermgr/wrapper.go)
