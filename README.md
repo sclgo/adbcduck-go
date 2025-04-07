@@ -19,6 +19,7 @@ for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Ar
   is this library is not inherently better (or worse) than the approach in the official Go client, it is unlikely that
   the two different codebases will have the same bugs. The Arrow ADBC Go library which implements the majority of this
   driver is [actively developed and supported](https://github.com/apache/arrow-adbc/pulse/monthly).
+  - For example, `adbcduck-go` doesn't suffer from [go-duckdb#305](https://github.com/marcboeker/go-duckdb/issues/305)
 - **apps that need to work with a specific DuckDB version or even multiple version at the same time** - 
   This driver loads the DuckDB dynamic library at runtime. Multiple DuckDB dynamic libraries can be used 
   at the same time in the same app. In contrast, the official DuckDB Go client either works 

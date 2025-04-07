@@ -3,7 +3,7 @@ module github.com/sclgo/adbcduck-go
 go 1.23.6
 
 require (
-	github.com/apache/arrow-adbc/go/adbc v1.5.0
+	github.com/apache/arrow-adbc/go/adbc v0.0.0-20250407145436-854d31e267bd
 	github.com/murfffi/getaduck v0.2.0
 	github.com/stretchr/testify v1.10.0
 )
@@ -25,7 +25,7 @@ require (
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/tools v0.31.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/protobuf v1.36.5 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
