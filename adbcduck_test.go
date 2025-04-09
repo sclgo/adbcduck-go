@@ -43,12 +43,12 @@ func testUnion(t *testing.T, db *sql.DB) {
 	rows, err := db.Query("select a from test order by n")
 	require.NoError(t, err)
 
-	require.True(t, rows.Next())
+	require.True(t, rows.Next(), "rows.Err() is %v", rows.Err())
 	require.NoError(t, rows.Err())
 	require.NoError(t, rows.Scan(&uStr))
 	require.Equal(t, "aba", uStr)
 
-	require.True(t, rows.Next())
+	require.True(t, rows.Next(), "rows.Err() is %v", rows.Err())
 	require.NoError(t, rows.Err())
 	require.NoError(t, rows.Scan(&uInt))
 	require.Equal(t, 2, uInt)

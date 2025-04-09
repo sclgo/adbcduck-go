@@ -2,7 +2,7 @@
 
 `adbcduck-go` is a Go [database/sql](https://pkg.go.dev/database/sql) driver for [DuckDB](https://duckdb.org/)
 [ADBC API](https://duckdb.org/docs/clients/adbc). It is an alternative to the [official Go driver](https://duckdb.org/docs/clients/go) `github.com/marcboeker/go-duckdb`.
-`adbcduck-go` is a thin, but not trivial, wrapper over generic `database/sql` [adapter](https://pkg.go.dev/github.com/apache/arrow-adbc/go/adbc/sqldriver) 
+`adbcduck-go` is a fork of the generic `database/sql` [adapter](https://pkg.go.dev/github.com/apache/arrow-adbc/go/adbc/sqldriver) 
 for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Arrow project](https://arrow.apache.org/).
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/sclgo/adbcduck-go.svg)](https://pkg.go.dev/github.com/sclgo/adbcduck-go)
@@ -17,16 +17,18 @@ for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Ar
   you use them only in tests.
 - **developers that hit [issues](https://github.com/marcboeker/go-duckdb/issues) in the official library** - while the approach
   is this library is not inherently better (or worse) than the approach in the official Go client, it is unlikely that
-  the two different codebases will have the same bugs. The Arrow ADBC Go library which implements the majority of this
-  driver is [actively developed and supported](https://github.com/apache/arrow-adbc/pulse/monthly).
+  the two different codebases will have the same bugs. This fork and the upstream Arrow ADBC Go library are
+  [actively developed and supported](https://github.com/apache/arrow-adbc/pulse/monthly).
   - For example, `adbcduck-go` doesn't suffer from [go-duckdb#305](https://github.com/marcboeker/go-duckdb/issues/305)
 - **apps that need to work with a specific DuckDB version or even multiple version at the same time** - 
   This driver loads the DuckDB dynamic library at runtime. Multiple DuckDB dynamic libraries can be used 
   at the same time in the same app. In contrast, the official DuckDB Go client either works 
   with the fixed bundled DuckDB release or with a single specific dynamic 
   library, [specified](https://github.com/marcboeker/go-duckdb?tab=readme-ov-file#dynamic-linking) both at compile time and at runtime.
+  - As a result, the latest version of DuckDB is usable with adbcduck-go immediately after it is released, while
+    it takes 2-4 weeks for a DuckDB release to be embedded in the official Go client. 
   - DuckDB guarantees backward compatibility of database files but 
-    [not forward compatibility](https://duckdb.org/docs/stable/internals/storage.html#compatibility) so developers
+    [forward compatibility depends on configuration](https://duckdb.org/docs/stable/internals/storage.html#compatibility). Developers
     should carefully choose client library and DuckDB versions when using shared DBs.
 
 ## Quickstart
