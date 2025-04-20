@@ -2,6 +2,7 @@ package adbcduck_test
 
 import (
 	"database/sql"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -17,18 +18,34 @@ func TestE2E(t *testing.T) {
 	t.Cleanup(func() {
 		_ = db.Close()
 	})
-	err = db.Ping()
-	require.NoError(t, err)
-	tx, err := db.Begin()
-	require.NoError(t, err)
-	var version string
-	err = db.QueryRow("SELECT VERSION()").Scan(&version)
-	require.NoError(t, err)
-	require.Equal(t, 2, strings.Count(version, "."))
-	require.NoError(t, tx.Commit())
-
-	testUnion(t, db)
-
+	t.Run("ping", func(t *testing.T) {
+		err = db.Ping()
+		require.NoError(t, err)
+	})
+	t.Run("transaction", func(t *testing.T) {
+		tx, err := db.Begin()
+		require.NoError(t, err)
+		var version string
+		err = db.QueryRow("SELECT VERSION()").Scan(&version)
+		require.NoError(t, err)
+		require.Equal(t, 2, strings.Count(version, "."))
+		require.NoError(t, tx.Commit())
+	})
+	t.Run("union", func(t *testing.T) {
+		testUnion(t, db)
+	})
+	t.Run("decimal", func(t *testing.T) {
+		var res any
+		err = db.QueryRow("SELECT 0.13-0.07").Scan(&res)
+		require.NoError(t, err)
+		require.Equal(t, "0.06", fmt.Sprint(res))
+	})
+	t.Run("float", func(t *testing.T) {
+		var res any
+		err = db.QueryRow("SELECT 0.13::FLOAT-0.07").Scan(&res)
+		require.NoError(t, err)
+		require.Equal(t, "0.059999995", fmt.Sprint(res))
+	})
 	err = db.Close()
 	require.NoError(t, err)
 }

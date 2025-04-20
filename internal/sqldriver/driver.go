@@ -37,6 +37,7 @@ import (
 	"github.com/apache/arrow-go/v18/arrow/decimal128"
 	"github.com/apache/arrow-go/v18/arrow/decimal256"
 	"github.com/apache/arrow-go/v18/arrow/memory"
+	"github.com/sclgo/adbcduck-go/types"
 )
 
 func parseConnectStr(str string) (ret map[string]string, err error) {
@@ -652,9 +653,15 @@ func getValue(col arrow.Array, idx int) (driver.Value, error) {
 	case *array.Timestamp:
 		value = col.Value(idx).ToTime(col.DataType().(*arrow.TimestampType).Unit)
 	case *array.Decimal128:
-		value = col.Value(idx)
+		value = types.Decimal[decimal128.Num]{
+			Num:   col.Value(idx),
+			Scale: col.DataType().(arrow.DecimalType).GetScale(),
+		}
 	case *array.Decimal256:
-		value = col.Value(idx)
+		value = types.Decimal[decimal256.Num]{
+			Num:   col.Value(idx),
+			Scale: col.DataType().(arrow.DecimalType).GetScale(),
+		}
 	case array.ListLike:
 		i, j := col.ValueOffsets(idx)
 		listVal := make([]driver.Value, j-i)
