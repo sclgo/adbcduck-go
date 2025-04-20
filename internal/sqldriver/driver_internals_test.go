@@ -33,6 +33,7 @@ import (
 	"github.com/apache/arrow-go/v18/arrow/decimal128"
 	"github.com/apache/arrow-go/v18/arrow/decimal256"
 	"github.com/apache/arrow-go/v18/arrow/memory"
+	"github.com/sclgo/adbcduck-go/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -254,7 +255,10 @@ func TestNextRowTypes(t *testing.T) {
 				t.Helper()
 				b.(*array.Decimal128Builder).Append(decimal128.FromU64(10))
 			},
-			golangValue: decimal128.FromU64(10),
+			golangValue: types.Decimal[decimal128.Num]{
+				Num:   decimal128.FromU64(10),
+				Scale: 2,
+			},
 		},
 		{
 			arrowType: &arrow.Decimal256Type{Precision: 10, Scale: 5},
@@ -262,7 +266,10 @@ func TestNextRowTypes(t *testing.T) {
 				t.Helper()
 				b.(*array.Decimal256Builder).Append(decimal256.FromU64(10))
 			},
-			golangValue: decimal256.FromU64(10),
+			golangValue: types.Decimal[decimal256.Num]{
+				Num:   decimal256.FromU64(10),
+				Scale: 5,
+			},
 		},
 		{
 			arrowType: arrow.SparseUnionOf([]arrow.Field{stringField, int32Field}, []arrow.UnionTypeCode{0, 1}),
