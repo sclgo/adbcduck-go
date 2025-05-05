@@ -2,7 +2,7 @@
 
 `adbcduck-go` is a Go [database/sql](https://pkg.go.dev/database/sql) driver for [DuckDB](https://duckdb.org/)
 [ADBC API](https://duckdb.org/docs/clients/adbc). It is an alternative to the [official Go driver](https://duckdb.org/docs/clients/go) `github.com/marcboeker/go-duckdb`.
-`adbcduck-go` is a fork of the generic `database/sql` [adapter](https://pkg.go.dev/github.com/apache/arrow-adbc/go/adbc/sqldriver) 
+`adbcduck-go` contains a fork of the generic `database/sql` [adapter](https://pkg.go.dev/github.com/apache/arrow-adbc/go/adbc/sqldriver) 
 for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Arrow project](https://arrow.apache.org/).
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/sclgo/adbcduck-go.svg)](https://pkg.go.dev/github.com/sclgo/adbcduck-go)
@@ -11,15 +11,14 @@ for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Ar
 
 `adbcduck-go` is great for:
 
-- **libraries that value their dependency footprint** - `go get github.com/sclgo/adbcduck-go` downloads up to 310 MB in Go modules,
-  while `go get github.com/marcboeker/go-duckdb` downloads up to 824 MB - 500 MB more. Even when using GOPROXY, this quickly adds up
-  especially in CI builds. Remember, projects that import your Go library must download all your transitive dependencies, even
-  you use them only in tests.
+- **libraries that value their dependency footprint** - `go mod tidy` after importing `github.com/sclgo/adbcduck-go/quickstart` downloads up to 371 MB in Go modules,
+  while `github.com/marcboeker/go-duckdb/v2` downloads up to 1.5 GB - over 1100 MB more. Even when using GOPROXY, this quickly adds up
+  especially in CI builds. Remember, projects that import your Go library [must download](https://go.dev/wiki/Modules#why-does-go-mod-tidy-record-indirect-and-test-dependencies-in-my-gomod) 
+  all your transitive dependencies during `go mod tidy`, even you use them only in tests.
 - **developers that hit [issues](https://github.com/marcboeker/go-duckdb/issues) in the official library** - while the approach
   is this library is not inherently better (or worse) than the approach in the official Go client, it is unlikely that
   the two different codebases will have the same bugs. This fork and the upstream Arrow ADBC Go library are
   [actively developed and supported](https://github.com/apache/arrow-adbc/pulse/monthly).
-  - For example, `adbcduck-go` doesn't suffer from [go-duckdb#305](https://github.com/marcboeker/go-duckdb/issues/305)
 - **apps that need to work with a specific DuckDB version or even multiple version at the same time** - 
   This driver loads the DuckDB dynamic library at runtime. Multiple DuckDB dynamic libraries can be used 
   at the same time in the same app. In contrast, the official DuckDB Go client either works 
