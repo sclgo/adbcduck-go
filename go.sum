@@ -1,7 +1,10 @@
 github.com/andybalholm/brotli v1.2.0 h1:ukwgCxwYrmACq68yiUqwIWnGY0cTPox/M94sVwToPjQ=
 github.com/andybalholm/brotli v1.2.0/go.mod h1:rzTDkvFWvIrjDXZHkuS16NPggd91W3kUSvPlQ1pLaKY=
+github.com/ansel1/merry v1.5.1 h1:/MlZd3Irx2HQsUlOcXTTYev7N1t1Rsdnxwg6xkOVJp4=
 github.com/ansel1/merry/v2 v2.2.1 h1:PJpynLFvIpJkn8ZGgNHLq332zIyBc/wTqp3o42ZpWdU=
 github.com/ansel1/merry/v2 v2.2.1/go.mod h1:K9lCkM6tJ8s7LQVQ0ZmZ0WrB3BCyr+ZDzoqotzzoxpI=
+github.com/ansel1/merry/v2 v2.2.2 h1:/R8URU5LtiYwP7UI1KoZW4ex4nTzr+/T49+TYZsjUas=
+github.com/ansel1/merry/v2 v2.2.2/go.mod h1:sludwzkWfhZHOF4jSOViv+t2nnu2HNmtsMKzAfwmVB8=
 github.com/apache/arrow-adbc/go/adbc v1.8.0 h1:7+N4yNfYs0wQBiDeNgmrNGKeGghTrny62uq87KM57KY=
 github.com/apache/arrow-adbc/go/adbc v1.8.0/go.mod h1:jJAiymurYZcYdxPMIH1OrKA8aMEN/UKvMKPpTAnogSY=
 github.com/apache/arrow-go/v18 v18.4.1 h1:q/jVkBWCJOB9reDgaIZIdruLQUb1kbkvOnOFezVH1C4=
@@ -38,8 +41,8 @@ github.com/minio/asm2plan9s v0.0.0-20200509001527-cdd76441f9d8 h1:AMFGa4R4MiIpsp
 github.com/minio/asm2plan9s v0.0.0-20200509001527-cdd76441f9d8/go.mod h1:mC1jAcsrzbxHt8iiaC+zU4b1ylILSosueou12R++wfY=
 github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3 h1:+n/aFZefKZp7spd8DFdX7uMikMLXX4oubIzJF4kv/wI=
 github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3/go.mod h1:RagcQ7I8IeTMnF8JTXieKnO4Z6JCsikNEzj0DwauVzE=
-github.com/murfffi/getaduck v0.2.0 h1:7kXBxt3AGlki1qRIfsFEnfPRQmUVQoN4C2DLieH++k4=
-github.com/murfffi/getaduck v0.2.0/go.mod h1:/xn7neksvcSPafRB7ixA9aOJza6JQ+wxmMAlHapiafQ=
+github.com/murfffi/getaduck v0.2.1 h1:gvaE/VYo9n3Un+2z/0umqJAo0K5Iw2rpZFXd+rGjLGE=
+github.com/murfffi/getaduck v0.2.1/go.mod h1:1RXtD/fqBjKvAUWZqXrS7JfHb7LEwpUEagc7gY14syg=
 github.com/pierrec/lz4/v4 v4.1.22 h1:cKFw6uJDK+/gfw5BcDL0JL5aBsAFdsIT18eRtLj7VIU=
 github.com/pierrec/lz4/v4 v4.1.22/go.mod h1:gZWDp/Ze/IJXGXf23ltt2EXimqmTUXEy0GFuRQyBid4=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=

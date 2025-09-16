@@ -1,16 +1,16 @@
 module github.com/sclgo/adbcduck-go
 
-go 1.24.6
+go 1.24.7
 
 require (
 	github.com/apache/arrow-adbc/go/adbc v1.8.0
 	github.com/apache/arrow-go/v18 v18.4.1
-	github.com/murfffi/getaduck v0.2.0
+	github.com/murfffi/getaduck v0.2.1
 	github.com/stretchr/testify v1.11.1
 )
 
 require (
-	github.com/ansel1/merry/v2 v2.2.1 // indirect
+	github.com/ansel1/merry/v2 v2.2.2 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/google/flatbuffers v25.2.10+incompatible // indirect
