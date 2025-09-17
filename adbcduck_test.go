@@ -18,6 +18,9 @@ func TestE2E(t *testing.T) {
 	t.Cleanup(func() {
 		_ = db.Close()
 	})
+
+	err = logDuckdbVersion(t, err, db)
+
 	t.Run("ping", func(t *testing.T) {
 		err = db.Ping()
 		require.NoError(t, err)
@@ -30,6 +33,11 @@ func TestE2E(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, 2, strings.Count(version, "."))
 		require.NoError(t, tx.Commit())
+	})
+	t.Run("ddl dml", func(t *testing.T) {
+		require.NoError(t, exec(db, "create table foobar(n int)"))
+		require.NoError(t, exec(db, "insert into foobar(n) values (?)", int8(1)))
+		require.NoError(t, exec(db, "drop table foobar"))
 	})
 	t.Run("union", func(t *testing.T) {
 		testUnion(t, db)
@@ -50,10 +58,18 @@ func TestE2E(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func logDuckdbVersion(t *testing.T, err error, db *sql.DB) error {
+	var version string
+	err = db.QueryRow("SELECT VERSION()").Scan(&version)
+	require.NoError(t, err)
+	t.Log(version)
+	return err
+}
+
 // Check for https://github.com/marcboeker/go-duckdb/issues/305
 func testUnion(t *testing.T, db *sql.DB) {
 	require.NoError(t, exec(db, "create table test(n int, a union(u varchar, v int))"))
-	require.NoError(t, exec(db, "insert into test values(1, 'aba'),(2, 2)"))
+	require.NoError(t, exec(db, "insert into test values(?, ?),(?, ?)", int8(1), "aba", int8(2), int8(2)))
 
 	var uStr string
 	var uInt int
@@ -71,7 +87,7 @@ func testUnion(t *testing.T, db *sql.DB) {
 	require.Equal(t, 2, uInt)
 }
 
-func exec(db *sql.DB, dml string) error {
-	_, err := db.Exec(dml)
+func exec(db *sql.DB, dml string, args ...any) error {
+	_, err := db.Exec(dml, args...)
 	return err
 }
