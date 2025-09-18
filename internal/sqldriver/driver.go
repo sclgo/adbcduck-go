@@ -127,20 +127,6 @@ func (d Driver) OpenConnector(name string) (driver.Connector, error) {
 	return &connector{db, d.Driver, d}, nil
 }
 
-type ctxOptsKey struct{}
-
-func SetOptionsInCtx(ctx context.Context, opts map[string]string) context.Context {
-	return context.WithValue(ctx, ctxOptsKey{}, opts)
-}
-
-func GetOptionsFromCtx(ctx context.Context) map[string]string {
-	v, ok := ctx.Value(ctxOptsKey{}).(map[string]string)
-	if !ok {
-		return nil
-	}
-	return v
-}
-
 // conn is a connection to a database. It is not used concurrently by
 // multiple goroutines. It is assumed to be stateful.
 type conn struct {
@@ -183,7 +169,7 @@ func (c *conn) QueryContext(ctx context.Context, query string, args []driver.Nam
 	}
 
 	if err = s.SetSqlQuery(query); err != nil {
-		s.Close()
+		_ = s.Close()
 		return nil, err
 	}
 
@@ -240,12 +226,12 @@ func (c *conn) PrepareContext(ctx context.Context, query string) (driver.Stmt, e
 	}
 
 	if err := s.SetSqlQuery(query); err != nil {
-		s.Close()
+		_ = s.Close()
 		return nil, err
 	}
 
 	if err := s.Prepare(ctx); err != nil {
-		s.Close()
+		_ = s.Close()
 		return nil, err
 	}
 
@@ -255,6 +241,11 @@ func (c *conn) PrepareContext(ctx context.Context, query string) (driver.Stmt, e
 		if adbcErr.Code != adbc.StatusNotImplemented {
 			return nil, err
 		}
+	}
+
+	// workaround for apparent DuckDB 1.4 ADBC bug for DDL statements. No issue in 1.3.2, 1.2.2 TODO report
+	if len(paramSchema.Fields()) == 1 && paramSchema.Field(0).Name == "0" {
+		paramSchema = nil
 	}
 
 	return &stmt{stmt: s, paramSchema: paramSchema}, nil
@@ -295,11 +286,11 @@ func (s *stmt) NumInput() int {
 	return len(s.paramSchema.Fields())
 }
 
-func (s *stmt) Exec(args []driver.Value) (driver.Result, error) {
+func (s *stmt) Exec([]driver.Value) (driver.Result, error) {
 	return nil, driver.ErrSkip
 }
 
-func (s *stmt) Query(args []driver.Value) (driver.Rows, error) {
+func (s *stmt) Query([]driver.Value) (driver.Rows, error) {
 	return nil, driver.ErrSkip
 }
 
@@ -354,6 +345,7 @@ func isCorrectParamType(typ arrow.Type, val driver.Value) bool {
 		return checkType[decimal128.Num](val)
 	case arrow.DECIMAL256:
 		return checkType[decimal256.Num](val)
+	default:
 	}
 	// TODO: add more types here
 	return true
@@ -472,7 +464,7 @@ func arrFromVal(val any) arrow.Array {
 	return array.MakeFromData(data)
 }
 
-func createBoundRecord(values []driver.NamedValue, schema *arrow.Schema) arrow.Record {
+func createBoundRecord(values []driver.NamedValue, schema *arrow.Schema) arrow.RecordBatch {
 	fields := make([]arrow.Field, len(values))
 	cols := make([]arrow.Array, len(values))
 	if schema == nil {
@@ -489,7 +481,7 @@ func createBoundRecord(values []driver.NamedValue, schema *arrow.Schema) arrow.R
 			cols[v.Ordinal-1] = arr
 		}
 
-		return array.NewRecord(arrow.NewSchema(fields, nil), cols, 1)
+		return array.NewRecordBatch(arrow.NewSchema(fields, nil), cols, 1)
 	}
 
 	for _, v := range values {
@@ -510,7 +502,7 @@ func createBoundRecord(values []driver.NamedValue, schema *arrow.Schema) arrow.R
 		f.Type = arr.DataType()
 		cols[idx] = arr
 	}
-	return array.NewRecord(arrow.NewSchema(fields, nil), cols, 1)
+	return array.NewRecordBatch(arrow.NewSchema(fields, nil), cols, 1)
 }
 
 func (s *stmt) ExecContext(ctx context.Context, args []driver.NamedValue) (driver.Result, error) {
@@ -546,7 +538,7 @@ func (s *stmt) QueryContext(ctx context.Context, args []driver.NamedValue) (driv
 type rows struct {
 	rdr          array.RecordReader
 	curRow       int64
-	curRecord    arrow.Record
+	curRecord    arrow.RecordBatch
 	rowsAffected int64
 	stmt         *stmt
 }
@@ -736,6 +728,7 @@ func (r *rows) ColumnTypeScanType(index int) reflect.Type {
 		return reflect.TypeOf(string(""))
 	case arrow.TIME32, arrow.TIME64, arrow.DATE32, arrow.DATE64, arrow.TIMESTAMP:
 		return reflect.TypeOf(time.Time{})
+	default:
 	}
 	return nil
 }
