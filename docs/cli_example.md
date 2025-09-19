@@ -19,6 +19,7 @@ First, we prepare the MSSQL and DuckDB schemas. In the example, we use MSSQL run
 The Parquet data in the example is the open [Daylight Earth dataset](https://daylightmap.org/earth/) from OpenStreetMap.
 
 ```shell
+export AWS_REGION=us-west-2
 usql adbcduck:s3schema.db -c "CREATE OR REPLACE VIEW earth AS SELECT * FROM read_parquet('s3://daylight-openstreetmap/earth/release=v1.58/*/*', hive_partitioning = true)"
 usql ms://sa:Foobar12@localhost:1433 -c 'CREATE TABLE earth_copy("class" varchar(200), "subclass" varchar(200), names text)'
 ```
