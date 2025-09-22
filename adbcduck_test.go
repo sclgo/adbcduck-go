@@ -19,7 +19,7 @@ func TestE2E(t *testing.T) {
 		_ = db.Close()
 	})
 
-	err = logDuckdbVersion(t, err, db)
+	logDuckdbVersion(t, db)
 
 	t.Run("ping", func(t *testing.T) {
 		err = db.Ping()
@@ -54,16 +54,19 @@ func TestE2E(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, "0.059999995", fmt.Sprint(res))
 	})
+	t.Run("s3", func(t *testing.T) {
+		require.NoError(t, exec(db, "set s3_region='us-west-2'"))
+		require.NoError(t, exec(db, "CREATE OR REPLACE VIEW earth AS SELECT * FROM read_parquet('s3://daylight-openstreetmap/earth/release=v1.58/*/*', hive_partitioning = true)"))
+	})
 	err = db.Close()
 	require.NoError(t, err)
 }
 
-func logDuckdbVersion(t *testing.T, err error, db *sql.DB) error {
+func logDuckdbVersion(t *testing.T, db *sql.DB) {
 	var version string
-	err = db.QueryRow("SELECT VERSION()").Scan(&version)
+	err := db.QueryRow("SELECT VERSION()").Scan(&version)
 	require.NoError(t, err)
-	t.Log(version)
-	return err
+	t.Log("duckdb version", version)
 }
 
 // Check for https://github.com/marcboeker/go-duckdb/issues/305
