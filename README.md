@@ -15,11 +15,8 @@ for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Ar
   while `github.com/marcboeker/go-duckdb/v2` downloads up to 1.5 GB - over 1100 MB more. Even when using GOPROXY, this quickly adds up
   especially in CI builds. Remember, projects that import your Go library [must download](https://go.dev/wiki/Modules#why-does-go-mod-tidy-record-indirect-and-test-dependencies-in-my-gomod) 
   all your transitive dependencies during `go mod tidy`, even you use them only in tests.
-- **developers that hit [issues](https://github.com/marcboeker/go-duckdb/issues) in the official library** - while the approach
-  is this library is not inherently better (or worse) than the approach in the official Go client, it is unlikely that
-  the two different codebases will have the same bugs. This fork and the upstream Arrow ADBC Go library are
-  [actively developed and supported](https://github.com/apache/arrow-adbc/pulse/monthly).
-- **apps that need to work with a specific DuckDB version or even multiple version at the same time** - 
+- **apps that need to work with a specific DuckDB version, a DuckDB [preview release](https://duckdb.org/docs/installation/?version=main), 
+  or even multiple version at the same time** - 
   This driver loads the DuckDB dynamic library at runtime. Multiple DuckDB dynamic libraries can be used 
   at the same time in the same app. In contrast, the official DuckDB Go client either works 
   with the fixed bundled DuckDB release or with a single specific dynamic 
@@ -29,7 +26,10 @@ for [ADBC](https://arrow.apache.org/adbc/) drivers, maintained by the [Apache Ar
   - DuckDB guarantees backward compatibility of database files but 
     [forward compatibility depends on configuration](https://duckdb.org/docs/stable/internals/storage.html#compatibility). Developers
     should carefully choose client library and DuckDB versions when using shared DBs.
-
+- **developers that hit [issues](https://github.com/marcboeker/go-duckdb/issues) in the official library** - while the approach
+  is this library is not inherently better (or worse) than the approach in the official Go client, it is unlikely that
+  the two different codebases will have the same bugs. This fork and the upstream Arrow ADBC Go library are
+  [actively developed and supported](https://github.com/apache/arrow-adbc/pulse/monthly).
 ## Quickstart
 
 To get started quickly, use:
