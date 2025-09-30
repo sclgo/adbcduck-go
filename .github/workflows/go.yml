@@ -25,6 +25,7 @@ jobs:
       run: |
         sudo apt-get install moreutils -y
         make test
+        DUCKDB_VERSION=preview go test -v
 
   os-tests:
     runs-on: ${{ matrix.os }}

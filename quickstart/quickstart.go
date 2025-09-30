@@ -15,6 +15,7 @@ func init() {
 	if ver := os.Getenv("DUCKDB_VERSION"); ver != "" {
 		spec.Version = ver
 	}
+	spec.Overwrite = true
 	downloadRes, err := download.Do(spec)
 	if err != nil {
 		panic(err)
